@@ -87,6 +87,18 @@ type helmOverride struct {
 	Helm helmParameters `json:"helm"`
 }
 
+type pluginParameter struct {
+	Name  string `json:"name"`
+	Value string `json:"value"`
+}
+
+type pluginParameters struct {
+	Env []pluginParameter `json:"env"`
+}
+type pluginOverride struct {
+	Plugin pluginParameters `json:"plugin"`
+}
+
 // ChangeEntry represents an image that has been changed by Image Updater
 type ChangeEntry struct {
 	Image  *image.ContainerImage
@@ -373,6 +385,24 @@ func setAppImage(app *v1alpha1.Application, img *image.ContainerImage) error {
 	return err
 }
 
+func concatenateParameters(app *v1alpha1.Application) string {
+	var params []string
+	for _, parameter := range app.Spec.Source.Helm.Parameters {
+		params = append(params, strings.Join([]string{parameter.Name, parameter.Value}, "="))
+	}
+	joinedParameters := strings.Join(params, ",")
+	return "--set-string " + joinedParameters
+}
+
+func transformPluginEnv(app *v1alpha1.Application) []pluginParameter {
+	var params []pluginParameter
+	for _, parameter := range app.Spec.Source.Plugin.Env {
+		params = append(params, pluginParameter{Name: parameter.Name, Value: parameter.Value})
+	}
+	params = append(params, pluginParameter{Name: "HELM_ADDITIONAL_VALUES", Value: concatenateParameters(app)})
+	return params
+}
+
 // marshalParamsOverride marshals the parameter overrides of a given application
 // into YAML bytes
 func marshalParamsOverride(app *v1alpha1.Application) ([]byte, error) {
@@ -392,6 +422,14 @@ func marshalParamsOverride(app *v1alpha1.Application) ([]byte, error) {
 		}
 		override, err = yaml.Marshal(params)
 	case ApplicationTypeHelm:
+		if app.Spec.Source.Plugin != nil {
+			params := pluginOverride{
+				Plugin: pluginParameters{
+					Env: transformPluginEnv(app),
+				},
+			}
+			return yaml.Marshal(params)
+		}
 		if app.Spec.Source.Helm == nil {
 			return []byte{}, nil
 		}

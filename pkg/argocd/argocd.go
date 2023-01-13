@@ -525,7 +525,7 @@ func getApplicationType(app *v1alpha1.Application) ApplicationType {
 	}
 	if sourceType == v1alpha1.ApplicationSourceTypeKustomize {
 		return ApplicationTypeKustomize
-	} else if sourceType == v1alpha1.ApplicationSourceTypeHelm {
+	} else if sourceType == v1alpha1.ApplicationSourceTypeHelm || sourceType == v1alpha1.ApplicationSourceTypePlugin {
 		return ApplicationTypeHelm
 	} else {
 		return ApplicationTypeUnsupported
