@@ -4,31 +4,29 @@ go 1.16
 
 require (
 	github.com/Masterminds/semver v1.5.0
-	github.com/argoproj/argo-cd/v2 v2.2.7
-	github.com/argoproj/gitops-engine v0.5.2
-	github.com/argoproj/pkg v0.11.1-0.20211203175135-36c59d8fafe0
+	github.com/argoproj/argo-cd/v2 v2.8.13
+	github.com/argoproj/gitops-engine v0.7.1-0.20230607163028-425d65e07695
+	github.com/argoproj/pkg v0.13.7-0.20230626144333-d56162821bd1
 	github.com/bradleyfalzon/ghinstallation v1.1.1
 	github.com/distribution/distribution/v3 v3.0.0-20220311160646-514cbd71bedb
 	github.com/docker/libtrust v0.0.0-20160708172513-aabc10ec26b7 // indirect
-	github.com/go-git/go-git/v5 v5.2.0
-	github.com/google/go-querystring v1.1.0 // indirect
+	github.com/go-git/go-git/v5 v5.11.0
 	github.com/opencontainers/go-digest v1.0.0
 	github.com/patrickmn/go-cache v2.1.0+incompatible
-	github.com/prometheus/client_golang v1.11.0
-	github.com/sirupsen/logrus v1.8.1
-	github.com/spf13/cobra v1.1.3
+	github.com/prometheus/client_golang v1.16.0
+	github.com/sirupsen/logrus v1.9.3
+	github.com/spf13/cobra v1.7.0
 	github.com/spf13/pflag v1.0.5
-	github.com/stretchr/testify v1.7.0
+	github.com/stretchr/testify v1.8.4
 	go.uber.org/ratelimit v0.1.1-0.20201110185707-e86515f0dda9
-	golang.org/x/crypto v0.0.0-20211215153901-e495a2d5b3d3
-	golang.org/x/oauth2 v0.0.0-20210819190943-2bc19b11175f // indirect
-	golang.org/x/sync v0.0.0-20210220032951-036812b2e83c
+	golang.org/x/crypto v0.16.0
+	golang.org/x/sync v0.3.0
 	gopkg.in/yaml.v2 v2.4.0
 	k8s.io/api v1.22.4
 	k8s.io/apimachinery v1.22.4
 	k8s.io/client-go v11.0.1-0.20190816222228-6d55c1b1f1ca+incompatible
-	sigs.k8s.io/kustomize/api v0.8.11
-	sigs.k8s.io/kustomize/kyaml v0.11.0
+	sigs.k8s.io/kustomize/api v0.11.5
+	sigs.k8s.io/kustomize/kyaml v0.13.7
 )
 
 replace (
