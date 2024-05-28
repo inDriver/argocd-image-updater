@@ -22,6 +22,7 @@ import (
 	"github.com/distribution/distribution/v3/registry/client/auth"
 	"github.com/distribution/distribution/v3/registry/client/auth/challenge"
 	"github.com/distribution/distribution/v3/registry/client/transport"
+	ociv1 "github.com/opencontainers/image-spec/specs-go/v1"
 
 	"github.com/opencontainers/go-digest"
 
@@ -34,6 +35,15 @@ import (
 )
 
 // TODO: Check image's architecture and OS
+
+// knownMediaTypes is the list of media types we can process
+var knownMediaTypes = []string{
+	ocischema.SchemaVersion.MediaType,
+	schema1.MediaTypeSignedManifest,
+	schema2.SchemaVersion.MediaType,
+	manifestlist.SchemaVersion.MediaType,
+	ociv1.MediaTypeImageIndex,
+}
 
 // RegistryClient defines the methods we need for querying container registries
 type RegistryClient interface {
@@ -159,11 +169,10 @@ func (clt *registryClient) ManifestForTag(tagStr string) (distribution.Manifest,
 	if err != nil {
 		return nil, err
 	}
-	mediaType := []string{ocischema.SchemaVersion.MediaType, schema1.MediaTypeSignedManifest, schema2.SchemaVersion.MediaType, manifestlist.SchemaVersion.MediaType}
 	manifest, err := manService.Get(
 		context.Background(),
 		digest.FromString(tagStr),
-		distribution.WithTag(tagStr), distribution.WithManifestMediaTypes(mediaType))
+		distribution.WithTag(tagStr), distribution.WithManifestMediaTypes(knownMediaTypes))
 	if err != nil {
 		return nil, err
 	}
@@ -176,11 +185,10 @@ func (clt *registryClient) ManifestForDigest(dgst digest.Digest) (distribution.M
 	if err != nil {
 		return nil, err
 	}
-	mediaType := []string{ocischema.SchemaVersion.MediaType, schema1.MediaTypeSignedManifest, schema2.SchemaVersion.MediaType, manifestlist.SchemaVersion.MediaType}
 	manifest, err := manService.Get(
 		context.Background(),
 		dgst,
-		distribution.WithManifestMediaTypes(mediaType))
+		distribution.WithManifestMediaTypes(knownMediaTypes))
 	if err != nil {
 		return nil, err
 	}

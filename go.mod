@@ -13,6 +13,7 @@ require (
 	github.com/go-git/go-git/v5 v5.2.0
 	github.com/google/go-querystring v1.1.0 // indirect
 	github.com/opencontainers/go-digest v1.0.0
+	github.com/opencontainers/image-spec v1.0.2
 	github.com/patrickmn/go-cache v2.1.0+incompatible
 	github.com/prometheus/client_golang v1.11.0
 	github.com/sirupsen/logrus v1.8.1
