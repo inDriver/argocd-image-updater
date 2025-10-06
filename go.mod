@@ -35,6 +35,7 @@ require (
 replace (
 	github.com/docker/distribution => github.com/docker/distribution v2.8.1+incompatible
 	github.com/golang/protobuf => github.com/golang/protobuf v1.4.2
+	go.etcd.io/etcd => go.etcd.io/etcd v0.5.0-alpha.5.0.20190108173120-83c051b701d3
 
 	google.golang.org/grpc => google.golang.org/grpc v1.15.0
 
